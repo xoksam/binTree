@@ -45,16 +45,15 @@ Node *BST::search(int data) {
 	return search(this->root, data);
 }
 
-Node *BST::search(Node * curr, int num) {
+Node *BST::search(Node *curr, int num) {
+		// Ak neexistuje current
 	if(!curr) return nullptr;
+		// Ak sme nasli nami vyhladavany uzol
 	if(curr->data == num) return curr;
-
+		// Ak je num < hodnota v current, tak sa vnor do laveho podstromu
 	if(num < curr->data) return search(curr->left, num);
 	else return search(curr->right, num);
-
 }
-
-
 
 // TODO 4: dokoncite funkciu na vymazanie uzla s hodnotou 'data'
 bool BST::remove(int data) {
