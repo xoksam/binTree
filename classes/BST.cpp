@@ -39,7 +39,6 @@ void BST::copyTree(Node *curr) {
 	}
 }
 
-
 // TODO 3: dokoncite funkciu na vyhladanie uzla s hodnotou 'data'
 Node *BST::search(int data) {
 	return search(this->root, data);
@@ -98,12 +97,95 @@ bool BST::remove(Node *curr, int num) {
 
 Node *BST::findMin(Node *curr) {
 	if(curr) {
-		while(curr->left) {
+		while(curr->left) { // V lavo su prvky vzdy mensie, tak idem stale vlavo ... 
 			curr = curr->left;
 		}
 	}
 	return curr;
 }
+
+void BST::removeTree(Node *root) {
+	if(root) {
+		removeTree(root->left); // Rekurzivne zmazem lavu cast podstromu
+		removeTree(root->right);// Aj pravu
+		delete root; 
+	}
+}
+// Root, Left, Right
+void BST::printPreOrder(Node *curr) {
+	if(curr) {
+		cout << "[" << curr->data << "]"; // Vypisem obsah uzla [root]
+		printPreOrder(curr->left);// Potom laveho
+		printPreOrder(curr->right);// A praveho
+	}
+}
+// Left, Root, Right
+void BST::printInOrder(Node *curr) {
+	if(curr) {
+		printInOrder(curr->left); // Najskor vypisem mensi, cize lavy
+		cout << "[" << curr->data << "]"; // Potom root
+		printInOrder(curr->right); // Potom vacsi, aka pravy
+	}
+}
+//Left, Right, Root
+void BST::printPostOrder(Node *curr) {
+	if(curr) {
+		printInOrder(curr->left);  
+		printInOrder(curr->right); 
+		cout << "[" << curr->data << "]";
+	}
+}
+
+bool BST::printLevelOrder(Node *curr, int level) {
+	if(curr) {
+		if(level == 0) {
+			cout << "[" << curr->data << "]";
+			return true;
+		}
+		bool isLeft = printLevelOrder(curr->left, level - 1);
+		bool isRight = printLevelOrder(curr->right, level - 1);
+	
+		// HMMMMMMMMmmmmmmmmmmmmmmmmm ...
+		//return printLevelOrder(curr->left, level - 1) || printLevelOrder(curr->right, level - 1);
+
+		return isLeft || isRight;
+	}
+	return false;
+
+}
+
+int BST::depth(Node *curr, int num, int currentDepth) {
+	if(curr) {
+		if(num == curr->data) return currentDepth; // mame hladany uzol
+		// Ak je hladany uzol mensi ako curr, tak sa rekurzivne vnorim do laveho podstromu a zvysim hlbku
+		else if(num < curr->data) return depth(curr->left, num, ++currentDepth); 
+		else return depth(curr->right, num, ++currentDepth);
+	}
+	return -1;
+}
+
+int BST::count(Node *root, int n) {
+	if(root) {
+		int left = count(root->left, ++n);
+		int right = count(root->right, ++n);
+		return left + right;
+	}
+	return 1; 
+}
+
+int BST::treeDepth(Node *root) {
+	if(root) {
+		//Zistim si hlbky laveho aj praveho podstromu 
+		int leftDepth = treeDepth(root->left);
+		int rightDepth = treeDepth(root->right);
+
+		// Vratim vacsiu z nich + 1 
+		if(leftDepth > rightDepth) return ++leftDepth;
+		else return ++rightDepth;
+	}
+	return 0;
+}
+
 
 // TODO 4: dokoncite funkciu na vymazanie uzla s hodnotou 'data'
 bool BST::remove(int data) {
@@ -111,37 +193,42 @@ bool BST::remove(int data) {
 }
 // TODO 5: dokoncite funkciu na vymazanie celeho BST
 void BST::removeTree() {
-
+	removeTree(this->root);
+	this->root = nullptr;
 }
 // TODO 6: dokoncite funkciu na vypis stromu stylom pre-order
 void BST::printPreOrder() {
-
+	printPreOrder(this->root);
 }
 
 // TODO 7: dokoncite funkciu na vypis stromu stylom in-order
 void BST::printInOrder() {
+	printInOrder(this->root);
 }
 // TODO 8: dokoncite funkciu na vypis stromu stylom post-order
 void BST::printPostOrder() {
+	printPostOrder(this->root);
 }
 
 void BST::printLevelOrder() {
+	int i = 0;
+	while(printLevelOrder(this->root, i++));
+
 }
 // TODO 10: dokoncite funkciu na zistenie hlbky uzla s hodnotou 'data'
 
 int BST::depth(int data) {
-	return -1;
+	return depth(this->root, data, 0);
 }
 // TODO 11: dokoncite funkciu na zistenie maximalnej hlbky stromu
 // Poznamka: koren ma hlbku 0.
 int BST::treeDepth() {
-	return -1;
+	return treeDepth(this->root) - 1; // -1, lebo koren ma hlbku 0
 }
 // TODO 12: dokoncite funkciu na zistenie poctu prvkov v strome
 int BST::count() {
-	return 0;
+	return count(this->root, 0) - 1;
 }
-
 // TODO 13: dokoncite funkciu 'applyFunction', ktora aplikuje
 //
 // vami definovanu funkciu 'fn' na kazdy uzol v BST.
@@ -162,6 +249,7 @@ int BST::count() {
 // Namiesto definicie funkcie 'fn' mozete pouzit lambda vyraz.
 
 void BST::applyFunctionToEachNode(const function<void(Node*)>& fn) {
+
 }
 
 

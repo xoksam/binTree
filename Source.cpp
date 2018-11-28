@@ -27,13 +27,54 @@ int main() {
 		cout << t << ": " << (tree.search(t) ? "found" : "not found") << endl;
 	}
 	// 4. remove
-	cout << "Remove: " << endl;
-	int to_delete[] {4,2,3,10};
-	for(int r : to_delete) {
-		 cout << r << ": " << (tree.remove(r) ? "removed" : "not removed (not found)") << endl; // odkomentujte pre otestovanie
+	//cout << "Remove: " << endl;
+	//int to_delete[] {4,2,3,10};
+	//for(int r : to_delete) {
+	//	 cout << r << ": " << (tree.remove(r) ? "removed" : "not removed (not found)") << endl; // odkomentujte pre otestovanie
+	//}
+
+	//cout << endl;
+
+	// 6. pre-order print
+	cout << "Pre-Order print: " << endl;
+	tree.printPreOrder();
+
+	cout << endl << endl;
+
+	// 7. in-order print
+	cout << "In-Order print: " << endl;
+	tree.printInOrder();
+
+	cout << endl << endl;
+
+	// 8. post-order print
+	cout << "Post-Order print: " << endl;
+	tree.printPostOrder();
+
+	cout << endl << endl;
+
+	// 9. level-order print
+	cout << "Level-Order print: " << endl;
+	tree.printLevelOrder();
+
+	cout << endl << endl;
+
+	// 10. depth of node
+	cout << "Depth of node:" << endl;
+	for(int i : values) {
+		cout << i << ": " << tree.depth(i) << endl;
 	}
+	cout << endl;
+
+	// 11. Tree max depth
+	cout << "Max depth of tree:" << endl;
+	cout << tree.treeDepth() << endl;
 
 	cout << endl;
+
+	// 12. number of nodes in tree
+	cout << "Number of nodes in tree:" << endl;
+	cout << tree.count() << endl;
 
 
 	cout << endl;

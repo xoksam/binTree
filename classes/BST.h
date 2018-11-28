@@ -51,6 +51,7 @@ public:
 	int treeDepth();
 	int count();
 	void applyFunctionToEachNode(const function<void(Node*)>& fn);
+
 private:
 	Node* root; // koren stromu 
 	bool insert(Node *curNode, int num);
@@ -58,6 +59,13 @@ private:
 	Node *search(Node *curr, int num);
 	bool remove(Node *curr, int num);
 	Node *findMin(Node *curr);
-
+	void removeTree(Node *root);
+	void printPreOrder(Node *curr);
+	void printInOrder(Node *curr);
+	void printPostOrder(Node *curr);
+	bool printLevelOrder(Node *curr, int level);
+	int depth(Node *curr, int num, int currentDepth);
+	int treeDepth(Node *root);
+	int count(Node *root, int n);
 
 };
