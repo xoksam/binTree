@@ -27,7 +27,7 @@ int main() {
 		cout << t << ": " << (tree.search(t) ? "found" : "not found") << endl;
 	}
 	
-	cout << "Hello World" << endl;
+
 	cout << endl;
 	system("pause");
 	return 0;

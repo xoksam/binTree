@@ -30,9 +30,6 @@ struct Node {
 		right(right) {
 	}
 };
-
-
-// TODO: Doprogramujte vyznacene metody
 // Trieda 'BST' sluzi na reprezentaciu BST a jeho operacii.
 class BST {
 public:
@@ -40,7 +37,6 @@ public:
 	BST(Node* root = nullptr):
 		root(root) {
 	}
-	// destruktor
 	~BST() {}
 	bool insert(int data);
 	BST(const BST& otherBST);
