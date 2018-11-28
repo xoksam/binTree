@@ -55,9 +55,59 @@ Node *BST::search(Node *curr, int num) {
 	else return search(curr->right, num);
 }
 
+bool BST::remove(Node *curr, int num) {
+	if(!curr) return false;
+	
+	// Nasli sme uzol ktory ideme mazat
+	if(curr->data == num) {
+		// Existuje len lavy alebo ziadny (neexistuje pravy)
+		if(!curr->right) {
+			if(this->root == curr) this->root = curr->left; // Ak vymazavam root
+			else { // Ak vymazavam iny uzol ako root
+				// AK je curr lavy potomok rodica
+				if(curr->parent->left == curr) curr->parent->left = curr->left;
+				else curr->parent->right = curr->left; // Ak je curr pravy potomok rodica
+			}
+		if(curr->left) curr->left->parent = curr->parent;
+		delete curr;
+		//return true;
+		//Existuje len pravy alebo ziadny (neexistuje lavy)
+		} else if(!curr->left) {
+			// Ak vymazavam root
+			if(this->root == curr) this->root = curr->right;
+			else { // Ak vymazavam iny uzol ako root
+				if(curr->parent->left == curr) curr->parent->left = curr->right; // Ak je curr lavy potomok rodica
+				else curr->parent->right = curr->right; // Ak pravy
+			}
+			// Ak curr nie je listom, aktualizuje sa rodic na praveho potomka
+			if(curr->right) curr->right->parent = curr->parent;
+			delete curr;
+		} else { // Existuje aj lavy aj pravy potomok
+				 // treba najst minimum v pravom podstrome (alebo maximum v lavom podstrome)
+				 // a nahradit nim vymazavany prvok
+			Node *rightMin = findMin(curr->right);
+			curr->data = rightMin->data;
+			remove(curr->right, rightMin->data); // Vymazanie najdeneho minima
+		}
+		return true;
+		// Ak je hodnota v curr > num, treba sa vnorit do laveho podstromu
+	} else if(curr->data > num) return remove(curr->left, num);
+	 // inak do praveho
+	else return remove(curr->right, num);
+}
+
+Node *BST::findMin(Node *curr) {
+	if(curr) {
+		while(curr->left) {
+			curr = curr->left;
+		}
+	}
+	return curr;
+}
+
 // TODO 4: dokoncite funkciu na vymazanie uzla s hodnotou 'data'
 bool BST::remove(int data) {
-	return false;
+	return remove(this->root, data);
 }
 // TODO 5: dokoncite funkciu na vymazanie celeho BST
 void BST::removeTree() {

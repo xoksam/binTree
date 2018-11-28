@@ -26,7 +26,15 @@ int main() {
 	for(int t : to_search) {
 		cout << t << ": " << (tree.search(t) ? "found" : "not found") << endl;
 	}
-	
+	// 4. remove
+	cout << "Remove: " << endl;
+	int to_delete[] {4,2,3,10};
+	for(int r : to_delete) {
+		 cout << r << ": " << (tree.remove(r) ? "removed" : "not removed (not found)") << endl; // odkomentujte pre otestovanie
+	}
+
+	cout << endl;
+
 
 	cout << endl;
 	system("pause");

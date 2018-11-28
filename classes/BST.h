@@ -56,4 +56,8 @@ private:
 	bool insert(Node *curNode, int num);
 	void copyTree(Node *root);
 	Node *search(Node *curr, int num);
+	bool remove(Node *curr, int num);
+	Node *findMin(Node *curr);
+
+
 };
